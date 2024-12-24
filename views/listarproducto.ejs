@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ALIMENTOS CONGELADOS</title>
+
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            background-color: #DAA520;
+        }
+
+        .table-dark {
+            background-color: #DAA520;
+        }
+
+        h1 {
+            color: #DAA520;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #DAA520;
+            border-color: #DAA520;
+        }
+
+        .btn-primary:hover {
+            background-color: #DAA520;
+            border-color: #DAA520;
+        }
+
+        .btn-danger {
+            background-color: #C72B2B;
+            border-color: #C72B2B;
+        }
+
+        .btn-danger:hover {
+            background-color: #9A2020;
+            border-color: #9A2020;
+        }
+
+        .text-critical {
+            color: #C72B2B;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+
+    <div id="wrapper">
+
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">TIENDAS MASS</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/index">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span></span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">Sistema</div>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Gestionar producto</span>
+                </a>
+                <div id="collapseTwo2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/listarproducto">Listar producto</a>
+                        <a class="collapse-item" href="/nuevoproducto">Nuevo producto</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <form id="searchForm" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input id="searchInput" type="text" class="form-control bg-light border-0 small" placeholder="Buscar productos..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </nav>
+
+                <div class="container">
+                    <h1>LISTA DE PRODUCTOS</h1>
+
+                    <table class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Código</th>
+                                <th scope="col">Nombre del Producto</th>
+                                <th scope="col">Categoría</th>
+                                <th scope="col">Fecha de vencimiento</th>
+                                <th scope="col">Stock</th>
+                                <th scope="col">Editar</th>
+                                <th scope="col">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (objproducto.length === 0) { %>
+                                <tr>
+                                    <td colspan="7" class="text-center">No hay productos disponibles.</td>
+                                </tr>
+                            <% } else { %>
+                                <% objproducto.forEach((producto) => { %>
+                                    <tr>
+                                        <td><%= producto.idproducto %></td>
+                                        <td><%= producto.nombreproducto %></td>
+                                        <td><%= producto.categoria %></td>
+                                        <td><%= producto.fecha.toISOString().split('T')[0] || 'No disponible' %></td>
+                                        <td class="<%= producto.stock < 10 ? 'text-critical' : '' %>">
+                                            <%= producto.stock %>
+                                        </td>
+                                        <td>
+                                            <a href="/edit/<%= producto.idproducto %>" class="btn btn-info">Editar</a>
+                                        </td>
+                                        <td>
+                                            <button onclick="eliminar('<%= producto.idproducto %>')" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <footer class="bg-light text-center text-lg-start mt-4">
+                    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.1);">
+                        © 2024 TIENDAS MASS - Todos los derechos reservados
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        function eliminar(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminarlo',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/delete/' + id;
+                }
+            });
+        }
+
+        document.querySelector('#searchInput').addEventListener('keyup', function () {
+            const filter = this.value.toUpperCase();
+            const rows = document.querySelectorAll('table tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const match = [...cells].some(cell => cell.textContent.toUpperCase().includes(filter));
+                row.style.display = match ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 text-gray-800">Lista de Usuarios</h1>
+    </div>
+    <% if (mensaje) { %>
+        <div class="alert alert-warning"><%= mensaje %></div>
+    <% } %>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Usuarios Registrados</h6>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% usuarios.forEach(usuario => { %>
+                        <tr>
+                            <td><%= usuario.id %></td>
+                            <td><%= usuario.nombre %></td>
+                            <td><%= usuario.email %></td>
+                            <td><%= usuario.rol %></td>
+                            <td>
+                                <a href="/editarusuario/<%= usuario.id %>" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="/eliminarusuario/<%= usuario.id %>" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 text-gray-800">Control de Inventario</h1>
+    </div>
+    <% if (mensaje) { %>
+        <div class="alert alert-warning"><%= mensaje %></div>
+    <% } %>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Inventario Actual</h6>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Stock</th>
+                        <th>Fecha de Vencimiento</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% inventario.forEach(producto => { %>
+                        <tr>
+                            <td><%= producto.codigo %></td>
+                            <td><%= producto.nombre %></td>
+                            <td><%= producto.categoria %></td>
+                            <td><%= producto.stock %></td>
+                            <td><%= producto.fechaVencimiento %></td>
+                            <td>
+                                <a href="/editar/<%= producto.codigo %>" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="/eliminar/<%= producto.codigo %>" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
